@@ -10,7 +10,6 @@ const PARALLAX_IMAGES = [
 
 export default function Hero() {
   const [currentBg, setCurrentBg] = useState(0);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   // Handle crossfade slideshow
   useEffect(() => {
@@ -18,29 +17,6 @@ export default function Hero() {
       setCurrentBg((prev) => (prev + 1) % PARALLAX_IMAGES.length);
     }, 6000);
     return () => clearInterval(slideTimer);
-  }, []);
-
-  // Countdown timer to August 27th, 2026 (Nepal Time coordinate Zone GST+5:45)
-  useEffect(() => {
-    const targetDate = new Date("2026-08-27T09:00:00+05:45").getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        clearInterval(interval);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      } else {
-        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((difference % (1000 * 60)) / 1000);
-        setTimeLeft({ days: d, hours: h, minutes: m, seconds: s });
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -77,7 +53,7 @@ export default function Hero() {
         <div className="mb-8 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-white/[0.05] border border-white/15 backdrop-blur-md px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl shadow-xl">
           <div className="flex items-center gap-2 text-white font-sans text-sm sm:text-base font-extrabold tracking-wider">
             <Calendar className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#eb0000]" />
-            <span>27 AUGUST 2026</span>
+            <span>SUNDAY, 20TH SEPTEMBER 2026</span>
           </div>
           <span className="hidden sm:inline text-white/30 text-sm">|</span>
           <div className="flex items-center gap-2 text-slate-100 font-sans text-sm sm:text-base font-semibold tracking-wide">
@@ -97,11 +73,10 @@ export default function Hero() {
         {/* Primary Call to Action Controls in Centered Layout */}
         <div className="mt-8 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-4 sm:px-0">
           <Link
-            id="desktop-register-button"
-            to="/register"
+            to="/feedback"
             className="w-full sm:w-auto px-8 py-3.5 bg-[#eb0000] hover:bg-[#c20000] text-white font-bold rounded-2xl shadow-lg shadow-red-950/20 uppercase tracking-widest text-[11px] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center"
           >
-            Register Now
+            Feedback
           </Link>
 
           <Link
@@ -113,30 +88,11 @@ export default function Hero() {
           </Link>
         </div>
 
-        {/* Dynamic Countdown Block */}
-        <div className="mt-14 w-full max-w-lg bg-white/[0.04] backdrop-blur-md rounded-3xl p-5.5 sm:p-6 border border-white/10 shadow-2xl">
-          <div className="grid grid-cols-4 gap-3.5 text-center">
-            <div className="bg-slate-900/40 p-2.5 rounded-2xl border border-white/5">
-              <p className="font-display font-black text-2xl sm:text-3xl text-white">{String(timeLeft.days).padStart(2, '0')}</p>
-              <p className="text-[9px] text-slate-400 uppercase font-sans mt-1 font-bold">Days</p>
-            </div>
-
-            <div className="bg-slate-900/40 p-2.5 rounded-2xl border border-white/5">
-              <p className="font-display font-black text-2xl sm:text-3xl text-white">{String(timeLeft.hours).padStart(2, '0')}</p>
-              <p className="text-[9px] text-slate-400 uppercase font-sans mt-1 font-bold">Hours</p>
-            </div>
-
-            <div className="bg-slate-900/40 p-2.5 rounded-2xl border border-white/5">
-              <p className="font-display font-black text-2xl sm:text-3xl text-white">{String(timeLeft.minutes).padStart(2, '0')}</p>
-              <p className="text-[9px] text-slate-400 uppercase font-sans mt-1 font-bold">Mins</p>
-            </div>
-
-            <div className="bg-slate-900/40 p-2.5 rounded-2xl border border-white/5">
-              <p className="font-display font-black text-2xl sm:text-3xl text-dnc-orange">{String(timeLeft.seconds).padStart(2, '0')}</p>
-              <p className="text-[9px] text-slate-400 uppercase font-sans mt-1 font-bold">Secs</p>
-            </div>
-          </div>
-        </div>
+        <p className="mt-14 font-display font-black text-lg sm:text-xl text-white uppercase tracking-wide drop-shadow-2xl">
+          Thank You for Attending
+          <br />
+          Digital Nepal Conclave 2026
+        </p>
 
       </div>
 

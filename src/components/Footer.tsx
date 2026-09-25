@@ -41,7 +41,7 @@ export default function Footer() {
               <li><Link to="/downloads" className="hover:text-white transition">Our Publications</Link></li>
               <li><Link to="/news-media" className="hover:text-white transition">News &amp; Media</Link></li>
               <li><Link to="/contact" className="hover:text-white transition">Contact Us</Link></li>
-              <li><Link to="/register" className="hover:text-white transition">Register Now</Link></li>
+              <li><a href="https://register.digitalconclave.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">Register Now</a></li>
             </ul>
           </div>
 

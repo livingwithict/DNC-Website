@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, MapPin, X, Award, Globe, Linkedin, Twitter, Shield, RefreshCw } from "lucide-react";
+import { Search, MapPin, X, Award, Globe, Linkedin, Shield, RefreshCw } from "lucide-react";
 import { SPEAKERS_LIST, Speaker } from "../data";
 
 export default function SpeakersComponent() {
@@ -8,7 +8,7 @@ export default function SpeakersComponent() {
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
 
   // Gather unique tags
-  const allTags = ["All", "Keynotes", "Fintech", "Policy", "Governance", "Big Tech"];
+  const allTags = ["All", "Chief Guest", "Session Chair", "Panelist", "Keynote Speaker", "Speaker", "Digital Spark Presenter", "Host", "Facilitator"];
 
   const filteredSpeakers = SPEAKERS_LIST.filter((spk) => {
     const matchesSearch = spk.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -16,7 +16,6 @@ export default function SpeakersComponent() {
       spk.title.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (activeTag === "All") return matchesSearch;
-    if (activeTag === "Keynotes") return matchesSearch && spk.isKeynote;
     return matchesSearch && spk.tags?.includes(activeTag);
   });
 
@@ -31,7 +30,7 @@ export default function SpeakersComponent() {
             Vanguard of Digital Innovation
           </span> */}
           <h1 className="font-display font-black text-3xl sm:text-4xl text-slate-900 tracking-tight">
-            Our Previous Speakers
+            Our Speakers
           </h1>
           {/* <p className="mt-2 text-sm text-slate-500 max-w-2xl mx-auto leading-relaxed">
             The conclave is graced by regional policy visionaries, Google South Asia directors, fin-tech pioneers, and central planners pushing technical protocols to implement paperless digital ecosystems.
@@ -39,22 +38,24 @@ export default function SpeakersComponent() {
         </div>
 
         {/* Search and Filters bar */}
-        <div className="bg-slate-50 border border-slate-200/65 rounded-3xl p-6 mb-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-slate-50 border border-slate-200/65 rounded-3xl p-6 mb-10 flex flex-col gap-6">
 
           {/* Search box */}
-          <div className="relative w-full md:w-80">
-            <input
-              type="text"
-              placeholder="Search speakers, titles, entities..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm sm:text-sm text-slate-700 placeholder-slate-400 focus:outline-hidden focus:ring-1 focus:ring-dnc-blue focus:border-dnc-blue shadow-2xs"
-            />
-            <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+          <div className="flex justify-end">
+            <div className="relative w-full md:w-80">
+              <input
+                type="text"
+                placeholder="Search speakers, titles, entities..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm sm:text-sm text-slate-700 placeholder-slate-400 focus:outline-hidden focus:ring-1 focus:ring-dnc-blue focus:border-dnc-blue shadow-2xs"
+              />
+              <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
+            </div>
           </div>
 
           {/* Tag filters list */}
-          <div className="flex flex-wrap items-center gap-1.5 self-start md:self-center">
+          <div className="flex flex-wrap items-center gap-1.5">
             {allTags.map((tag) => (
               <button
                 key={tag}
@@ -84,13 +85,19 @@ export default function SpeakersComponent() {
 
               <div>
                 {/* Image layout container */}
-                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 relative">
-                  <img
-                    src={spk.avatarUrl}
-                    alt={spk.name}
-                    className="w-full h-full object-cover grayscale-xs group-hover:grayscale-0 transition-all duration-300"
-                    referrerPolicy="no-referrer"
-                  />
+                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 relative flex items-center justify-center">
+                  {spk.avatarUrl ? (
+                    <img
+                      src={spk.avatarUrl}
+                      alt={spk.name}
+                      className="w-full h-full object-cover grayscale-xs group-hover:grayscale-0 transition-all duration-300"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <span className="font-display font-black text-3xl text-slate-300">
+                      {spk.name.replace(/^(Mr\.|Ms\.|Mrs\.|Dr\.|Prof\.)\s*/g, "").charAt(0)}
+                    </span>
+                  )}
                   {/* {spk.isKeynote && (
                     <span className="absolute top-3 left-3 px-2 py-0.5 bg-dnc-orange text-white text-[9px] font-sans font-extrabold rounded-md shadow-sm uppercase tracking-wider">
                       Keynote Speaker
@@ -98,8 +105,8 @@ export default function SpeakersComponent() {
                   )} */}
 
                   {/* Social media quick overlay container */}
-                  {/* <div className="absolute bottom-3 right-3 flex gap-1.5 bg-white/95 backdrop-blur-xs px-2 py-1.5 rounded-xl shadow-xs opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
-                    {spk.linkedinUrl && (
+                  {spk.linkedinUrl && (
+                    <div className="absolute bottom-3 right-3 flex gap-1.5 bg-white/95 backdrop-blur-xs px-2 py-1.5 rounded-xl shadow-xs opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
                       <a
                         href={spk.linkedinUrl}
                         target="_blank"
@@ -110,20 +117,8 @@ export default function SpeakersComponent() {
                       >
                         <Linkedin className="w-3.5 h-3.5" />
                       </a>
-                    )}
-                    {spk.twitterUrl && (
-                      <a
-                        href={spk.twitterUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-slate-600 hover:text-dnc-blue transition-colors p-0.5"
-                        title={`View ${spk.name} on Twitter / X`}
-                      >
-                        <Twitter className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                  </div> */}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-1 text-center">
@@ -174,7 +169,7 @@ export default function SpeakersComponent() {
         {selectedSpeaker && (
           <div id="speaker-detail-modal" className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4" onClick={() => setSelectedSpeaker(null)}>
             <div
-              className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 animate-fade-in relative transition-all"
+              className="bg-white rounded-3xl w-full max-w-3xl md:h-[400px] max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-200 animate-fade-in relative transition-all"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -185,27 +180,44 @@ export default function SpeakersComponent() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="grid grid-cols-1 md:grid-cols-12">
+              <div className="flex flex-col md:flex-row h-full">
 
                 {/* Left block profile image */}
-                <div className="md:col-span-5 bg-slate-50 aspect-square md:aspect-auto h-full min-h-[250px] relative">
-                  <img
-                    src={selectedSpeaker.avatarUrl}
-                    alt={selectedSpeaker.name}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                  {/* {selectedSpeaker.isKeynote && (
-                    <span className="absolute bottom-4 left-4 px-3 py-1 bg-dnc-orange text-white text-[10px] font-sans font-extrabold rounded-md shadow-md uppercase tracking-wider">
-                      Keynote Speaker
-                    </span>
-                  )} */}
+                <div className="flex-none bg-slate-50 relative flex items-center justify-center overflow-hidden">
+                  <div className="relative w-full max-h-72 md:max-h-none md:w-auto md:h-full aspect-[3/4] overflow-hidden flex items-center justify-center bg-slate-100">
+                    {selectedSpeaker.avatarUrl ? (
+                      <img
+                        src={selectedSpeaker.avatarUrl}
+                        alt={selectedSpeaker.name}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <span className="font-display font-black text-5xl text-slate-300">
+                        {selectedSpeaker.name.replace(/^(Mr\.|Ms\.|Mrs\.|Dr\.|Prof\.)\s*/g, "").charAt(0)}
+                      </span>
+                    )}
+
+                    {/* Social links block over profile image */}
+                    {selectedSpeaker.linkedinUrl && (
+                      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 flex gap-2">
+                        <a
+                          href={selectedSpeaker.linkedinUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-white/95 backdrop-blur-xs border border-transparent hover:border-dnc-blue hover:bg-white rounded-xl shadow-md text-xs sm:text-sm font-semibold text-slate-700 hover:text-dnc-blue transition duration-150"
+                        >
+                          <Linkedin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-dnc-blue" />
+                          LinkedIn
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Right block profile details */}
-                <div className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-dnc-blue font-sans tracking-widest block mb-1">Speaker Tech Panelist</span>
+                <div className="flex-1 min-h-0 flex flex-col p-6 sm:p-8">
+                  <div className="flex-none">
                     <h3 className="font-display font-extrabold text-xl text-slate-950 tracking-tight leading-tight mb-1">
                       {selectedSpeaker.name}
                     </h3>
@@ -219,41 +231,13 @@ export default function SpeakersComponent() {
                         {selectedSpeaker.company}
                       </p>
                     )}
-
-                    <div className="max-h-48 overflow-y-auto pr-2 mb-6">
-                      <p className="text-sm text-slate-600 leading-relaxed font-sans text-justify">
-                        {selectedSpeaker.bio}
-                      </p>
-                    </div>
-
-                    {/* Social links block inside Modal */}
-                    {/* <div className="mb-6 flex flex-wrap gap-2 items-center">
-                      <span className="text-[10px] text-slate-400 font-sans uppercase tracking-wider mr-1">Social Links:</span>
-                      {selectedSpeaker.linkedinUrl && (
-                        <a
-                          href={selectedSpeaker.linkedinUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-300 hover:border-dnc-blue hover:text-dnc-blue rounded-xl text-sm font-semibold text-slate-700 transition duration-150"
-                        >
-                          <Linkedin className="w-3.5 h-3.5 text-dnc-blue" />
-                          LinkedIn
-                        </a>
-                      )}
-                      {selectedSpeaker.twitterUrl && (
-                        <a
-                          href={selectedSpeaker.twitterUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-300 hover:border-dnc-blue hover:text-dnc-blue rounded-xl text-sm font-semibold text-slate-700 transition duration-150"
-                        >
-                          <Twitter className="w-3.5 h-3.5 text-sky-500" />
-                          Twitter / X
-                        </a>
-                      )}
-                    </div> */}
                   </div>
 
+                  <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+                    <p className="text-sm text-slate-600 leading-relaxed font-sans text-justify">
+                      {selectedSpeaker.bio || "Bio coming soon."}
+                    </p>
+                  </div>
                 </div>
 
               </div>

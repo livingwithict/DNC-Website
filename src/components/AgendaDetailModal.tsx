@@ -1,6 +1,6 @@
 import React from "react";
 import { X, Clock, MapPin, Users, Mic, Star, Lectern, LucideIcon } from "lucide-react";
-import { AgendaItem } from "../agendaData";
+import { AgendaItem, Person } from "../agendaData";
 
 interface CategoryConfig {
   color: string;
@@ -23,12 +23,21 @@ export default function AgendaDetailModal({ item, config, categoryLabel, onClose
 
   const IconComponent = config.icon;
 
-  const renderPersonnelGroup = (roleLabel: string, Icon: any, people?: string[]) => {
+  const parsePerson = (raw: string) => {
+    const parts = raw.split(",").map((p) => p.trim()).filter(Boolean);
+    return {
+      name: parts[0] || raw,
+      title: parts[1],
+      org: parts.slice(2).join(", ") || undefined,
+    };
+  };
+
+  const renderPersonnelGroup = (roleLabel: string, Icon: any, people?: Person[]) => {
     if (!people || people.length === 0) return null;
 
     return (
-      <div className="flex flex-wrap items-center gap-2.5">
-        <div className="flex items-center gap-2 mr-1">
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
           <div className="p-1.5 bg-slate-100/80 rounded-md">
             <Icon className="w-3.5 h-3.5 text-slate-600" />
           </div>
@@ -37,14 +46,32 @@ export default function AgendaDetailModal({ item, config, categoryLabel, onClose
           </span>
         </div>
 
-        {people.map((person, idx) => (
-          <div
-            key={`${roleLabel}-${idx}`}
-            className="px-3 py-1.5 bg-white/80 backdrop-blur-sm border border-slate-300/60 rounded-lg text-sm font-medium text-slate-800"
-          >
-            {person}
-          </div>
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {people.map((person, idx) => {
+            const { name, title, org } = parsePerson(person.name);
+            return (
+              <div
+                key={`${roleLabel}-${idx}`}
+                className="flex items-center gap-3 px-3 py-2.5 bg-white/80 backdrop-blur-sm border border-slate-300/60 rounded-xl"
+              >
+                <div className="w-16 h-16 shrink-0 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden">
+                  {person.photo ? (
+                    <img src={person.photo} alt={name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-lg font-display font-bold text-slate-400">
+                      {name.replace(/^(Mr\.|Ms\.|Mrs\.|Dr\.|Hon\.|Prof\.)\s*/g, "").charAt(0)}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col justify-center min-w-0 gap-0.5">
+                  <span className="text-sm font-bold text-slate-900 leading-tight truncate">{name}</span>
+                  <span className="text-xs font-sans font-medium text-slate-600 leading-tight truncate">{title || " "}</span>
+                  <span className="text-xs font-sans text-slate-400 leading-tight truncate">{org || " "}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   };

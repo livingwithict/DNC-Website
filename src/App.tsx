@@ -4,13 +4,16 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import AgendaPage from "./pages/AgendaPage";
+import DigitalSparkPage from "./pages/DigitalSparkPage";
 import SpeakersPage from "./pages/SpeakersPage";
 import PastEventsPage from "./pages/PastEventsPage";
 import PublicationsPage from "./pages/PublicationsPage";
 import NewsMediaPage from "./pages/NewsMediaPage";
 import ContactPage from "./pages/ContactPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import RegisterRedirectPage from "./pages/RegisterRedirectPage";
 import VolunteersPage from "./pages/VolunteersPage";
+import FeedbackPage from "./pages/FeedbackPage";
 
 export default function App() {
   return (
@@ -22,6 +25,7 @@ export default function App() {
         <Route path="about/:section?" element={<AboutPage />} />
         
         <Route path="agenda" element={<AgendaPage />} />
+        <Route path="digital-showcase" element={<DigitalSparkPage />} />
         <Route path="speakers" element={<SpeakersPage />} />
         
         <Route path="past-events" element={<Navigate to="/past-events/2025" replace />} />
@@ -30,8 +34,10 @@ export default function App() {
         <Route path="downloads" element={<PublicationsPage />} />
         <Route path="news-media" element={<NewsMediaPage />} />
         <Route path="contact" element={<ContactPage />} />
-        <Route path="register" element={<RegistrationPage />} />
+        <Route path="old-registration" element={<RegistrationPage />} />
+        <Route path="register" element={<RegisterRedirectPage />} />
         <Route path="volunteers" element={<VolunteersPage />} />
+        <Route path="feedback" element={<FeedbackPage />} />
       </Route>
     </Routes>
   );

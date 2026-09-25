@@ -39,6 +39,18 @@
   background: var(--color-dnc-blue-light);
 }
 
+.scrollbar-subtle {
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.scrollbar-subtle::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+.scrollbar-subtle::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 /* Smooth motion custom styles */
 .text-gradient {
   background: linear-gradient(135deg, var(--color-dnc-blue) 0%, var(--color-dnc-orange) 50%, var(--color-dnc-red) 100%);

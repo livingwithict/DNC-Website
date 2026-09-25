@@ -1,7 +1,51 @@
 import React from "react";
-import { useParams, useNavigate, Navigate } from "react-router-dom";
-import { Info, Building2, Users, ShieldCheck, HeartHandshake, Award, ExternalLink, Globe, Sparkles } from "lucide-react";
+import { useParams, useNavigate, Navigate, Link } from "react-router-dom";
+import { Info, Building2, Users, ShieldCheck, HeartHandshake, Award, ExternalLink, Globe, Sparkles, Shield, Smartphone, Database, TrendingUp } from "lucide-react";
 import { TEAM_MEMBERS,} from "../data";
+import { SESSION_THEMES, getSessionSlug } from "../agendaData";
+
+const SUB_THEME_FOCUS = [
+  {
+    title: "Governance & Resilience",
+    session: "01 | Governance & Resilience",
+    description: SESSION_THEMES["01 | Governance & Resilience"],
+    icon: Shield,
+    accent: "bg-dnc-blue",
+    text: "text-dnc-blue",
+  },
+  {
+    title: "Digital Public Services",
+    session: "02 | Digital Public Services",
+    description: SESSION_THEMES["02 | Digital Public Services"],
+    icon: Smartphone,
+    accent: "bg-teal-600",
+    text: "text-teal-600",
+  },
+  {
+    title: "AI Sovereignty & Data",
+    session: "03 | AI Sovereignty & Data",
+    description: SESSION_THEMES["03 | AI Sovereignty & Data"],
+    icon: Database,
+    accent: "bg-dnc-red",
+    text: "text-dnc-red",
+  },
+  {
+    title: "The Digital Economy Engine",
+    session: "04 | The Digital Economy Engine",
+    description: SESSION_THEMES["04 | The Digital Economy Engine"],
+    icon: TrendingUp,
+    accent: "bg-dnc-orange",
+    text: "text-dnc-orange",
+  },
+  {
+    title: "Leadership Dialogue",
+    session: "05 | Leadership Dialogue",
+    description: SESSION_THEMES["05 | Leadership Dialogue"],
+    icon: Award,
+    accent: "bg-slate-700",
+    text: "text-slate-700",
+  },
+];
 
 export default function AboutComponents() {
   // 1. Grab the section parameter from the URL (e.g., /about/team -> section = "team")
@@ -48,89 +92,41 @@ export default function AboutComponents() {
       {/* Strategic Focus Deliberation Blocks */}
       <div>
         <h3 className="font-display font-bold text-xl sm:text-2xl text-slate-905 mb-8 text-center">
-          Strategic Focus Areas & Deliberations
+          Sub-Themes & Deliberations
         </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Box 1 */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-xs relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-2 h-full bg-dnc-blue"></div>
-            <h4 className="font-display font-bold text-md text-dnc-blue mb-4">
-              Governance & Digital Public Infrastructure
-            </h4>
-            <ul className="space-y-3">
-              {[
-                "Institutional digital reform and transformative public service delivery",
-                "Smart governance frameworks for citizen-centric excellence",
-                "Integrated Digital ID and seamless public ecosystem architectures",
-                "Strategic policy innovation and regulatory landscape modernization",
-                "Evidence-based decision making through data-centric governance"
-              ].map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-600 line-height-relaxed">
-                  <span className="text-dnc-blue font-bold">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Box 2 */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-xs relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-2 h-full bg-dnc-orange"></div>
-            <h4 className="font-display font-bold text-md text-dnc-orange mb-4">
-              Data, AI & Cybersecurity
-            </h4>
-            <ul className="space-y-3">
-              {[
-                "National data sovereignty and robust governance frameworks",
-                "Ethical integration of Artificial Intelligence and frontier technologies",
-                "Building digital trust and cybersecurity resilience",
-                "Responsible technology adoption and ethical AI standards",
-                "Cross-sectoral data interoperability and digital architecture"
-              ].map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-600 line-height-relaxed">
-                  <span className="text-dnc-orange font-bold">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Box 3 */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-xs relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-2 h-full bg-dnc-red"></div>
-            <h4 className="font-display font-bold text-md text-dnc-red mb-4">
-              Digital Economy & Innovation
-            </h4>
-            <ul className="space-y-3">
-              {[
-                "Advancing fintech ecosystems and digital payment architecture",
-                "Fostering startup acceleration and a culture of entrepreneurship",
-                "Optimizing digital trade and e-commerce expansion",
-                "Investment prospects within the burgeoning innovation economy",
-                "Cultivating a future-ready digital workforce and talent pool"
-              ].map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-600 line-height-relaxed">
-                  <span className="text-dnc-red font-bold">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="flex flex-wrap justify-center gap-8">
+          {SUB_THEME_FOCUS.map((theme) => {
+            const IconComponent = theme.icon;
+            return (
+              <Link
+                key={theme.title}
+                to={`/agenda#${getSessionSlug(theme.session)}`}
+                className="group w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)] bg-white rounded-3xl p-6 border border-slate-100 shadow-xs relative overflow-hidden hover:shadow-md transition-all duration-300"
+              >
+                <div className={`absolute top-0 left-0 w-2 h-full ${theme.accent}`}></div>
+                <h4 className={`font-display font-bold text-md ${theme.text} mb-3 flex items-center gap-2 group-hover:underline`}>
+                  <IconComponent className="w-4 h-4" />
+                  {theme.title}
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">{theme.description}</p>
+              </Link>
+            );
+          })}
         </div>
       </div>
 
       {/* Theme Insight Card */}
       <div className="bg-white text-white rounded-3xl p-8 shadow-xs border border-slate-100">
         <h4 className="font-display font-extrabold text-lg sm:text-xl text-dnc-blue mb-3">
-          Behind the Theme: Reimagining Digital Governance, Data and the Digital Economy
+          Behind the Theme: BUILDING DIGITAL RESILIENCE
         </h4>
         <div className="space-y-4 text-sm sm:text-sm text-slate-900 leading-relaxed">
           <p>
-            This strategic theme underscores the vital synergy between digital governance reform, secure data frameworks, and robust public infrastructure. It emphasizes the pivotal role of artificial intelligence and frontier technologies in driving Nepal’s socio-economic evolution and fostering a sustainable innovation culture.
+            This strategic theme underscores the vital synergy between digital governance reform, secure data frameworks, and robust public infrastructure, while placing climate and disaster resilience at the heart of Nepal's digital future. It emphasizes the pivotal role of artificial intelligence and frontier technologies in driving Nepal's socio-economic evolution and fostering a sustainable innovation culture.
           </p>
           <p>
-            The Conclave explores the utilization of data-centric governance and cross-sectoral collaboration to refine public service delivery, enhance institutional resilience, and accelerate the digital trade ecosystem. Deliberations will further address the imperatives of cybersecurity, digital trust, and ethical technology integration, ensuring that the transition toward a global digital economy remains inclusive and equitable for all communities and sectors across the nation.
+            The Conclave explores the utilization of data-centric governance and cross-sectoral collaboration to refine public service delivery, enhance institutional resilience, and accelerate the digital trade ecosystem. Deliberations will further address digital public services, AI governance, and digital leadership, ensuring that the transition toward a global digital economy remains inclusive and equitable for all communities and sectors across the nation.
           </p>
         </div>
       </div>
@@ -242,10 +238,10 @@ export default function AboutComponents() {
           {TEAM_MEMBERS.map((member, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-6 border border-slate-100 shadow-2xs flex flex-col items-center text-center hover:shadow-md hover:border-slate-200 transition-all duration-300 group"
+              className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-100 shadow-2xs flex flex-col items-center text-center hover:shadow-md hover:border-slate-200 transition-all duration-300 group"
             >
               {/* Circular Photo Placeholder */}
-              <div className="w-36 h-36 rounded-full bg-slate-50 border border-slate-100 font-display font-bold text-slate-400 flex items-center justify-center mb-4 overflow-hidden group-hover:border-dnc-orange/30 transition-colors duration-300 shrink-0">
+              <div className="w-24 h-24 sm:w-36 sm:h-36 rounded-full bg-slate-50 border border-slate-100 font-display font-bold text-slate-400 flex items-center justify-center mb-4 overflow-hidden group-hover:border-dnc-orange/30 transition-colors duration-300 shrink-0">
                 {member.imageUrl ? (
                   <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover" />
                 ) : (
@@ -279,9 +275,9 @@ export default function AboutComponents() {
           {PATRONS.map((patron, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-6 border border-slate-100 shadow-2xs flex flex-col items-center text-center hover:shadow-md hover:border-slate-200 transition-all duration-300 group"
+              className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-100 shadow-2xs flex flex-col items-center text-center hover:shadow-md hover:border-slate-200 transition-all duration-300 group"
             >
-              <div className="w-36 h-36 rounded-full bg-slate-50 border border-slate-100 font-display font-bold text-slate-400 flex items-center justify-center mb-4 overflow-hidden group-hover:border-dnc-blue/30 transition-colors duration-300 shrink-0">
+              <div className="w-24 h-24 sm:w-36 sm:h-36 rounded-full bg-slate-50 border border-slate-100 font-display font-bold text-slate-400 flex items-center justify-center mb-4 overflow-hidden group-hover:border-dnc-blue/30 transition-colors duration-300 shrink-0">
                 {patron.imageUrl ? (
                   <img src={patron.imageUrl} alt={patron.name} className="w-full h-full object-cover" />
                 ) : (

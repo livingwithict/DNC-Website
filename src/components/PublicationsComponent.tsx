@@ -37,7 +37,7 @@ export default function PublicationsComponent() {
         </div>
 
         {/* Publication grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
           {filteredPubs.map((pub: Publication) => (
             <a
               key={pub.id}

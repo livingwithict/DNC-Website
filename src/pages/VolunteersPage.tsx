@@ -65,10 +65,10 @@ const PRE_EVENT_ROLES = [
   "Work with the organizing team on event management",
 ];
 
-const textareaClass =
+export const textareaClass =
   "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 focus:outline-hidden focus:ring-1 focus:ring-dnc-blue focus:border-dnc-blue resize-y";
 
-function ChoiceGroup({
+export function ChoiceGroup({
   label,
   hint,
   options,
@@ -254,8 +254,7 @@ export default function VolunteersPage() {
 
         <InfoPanel icon={<CalendarClock className="w-5 h-5" />} title="Volunteer Details">
           <p>
-            <span className="font-bold text-slate-800">Event day:</span> 27 August 2026 (11 Bhadra
-            2083), The Plaza, Pulchowk, Lalitpur — 7:30 AM.
+            <span className="font-bold text-slate-800">Event day:</span> Sunday, 20th September 2026, The Plaza, Pulchowk, Lalitpur.
           </p>
           <p>Volunteers are expected to participate 7–10 days prior to the main event.</p>
           <div>

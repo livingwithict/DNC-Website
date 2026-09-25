@@ -63,7 +63,7 @@ export default function MediaComponent() {
         {activeMediaTab === "news" ? (
           /* Press articles section */
           <div className="space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {NEWS_ARTICLES.map((article, idx) => (
                 <NewsCard
                   key={idx}
